@@ -63,4 +63,13 @@ EPOLLERR：描述符产生错误时触发，默认检测事件
 &emsp;timeout==0用于非阻塞检测是否有描述符处于ready状态，不管结果怎么样，调用都立即返回。<br>
 &emsp;timeout>0表示调用将最多持续timeout时间，如果期间有检测对象变成ready或者捕获到信号则返回，否则直到超时。<br>
 &emsp;3.3.3 参数解释：<br>
-&emsp;&emsp;处于ready状态的那些文件描述符会被复制进ready list中，epoll_wait用于向用户进程返回ready list。events和maxevents两个参数<br>&emsp;描述一个由用户分配的struct epoll event数组，调用返回时，内核将ready list复制到这个数组中，并将实际复制个数作为返回值，注意，如<br>&emsp;果ready list比maxevents大，则只能复制前maxevents个成员。<br>
+&emsp;&emsp;处于ready状态的那些文件描述符会被复制进ready list中，epoll_wait用于向用户进程返回ready list。events和maxevents两个参数描述一个由用户分配的struct epoll event数组，调用返回时，内核将ready list复制到这个数组中，并将实际复制个数作为返回值，注意，如果ready list比maxevents大，则只能复制前maxevents个成员。<br>
+
+## 4. epoll的两种触发方式
+&emsp;epoll支持两种触发方式：边缘触发(edge trigger, ET)和水平触发(level trigger, LT), 通过epoll_wait等待IO事件，如果当前没有可用的事件则阻塞调用线程。epoll默认使用LT模式。<br>
+### 4.1 水平触发的时机
+&emsp;对于读操作，只要缓冲内容不为空，LT模式返回读就绪。<br>
+&emsp;对于写操作，只要缓冲区还不满，LT模式就返回写就绪。<br>
+### 4.2 边缘触发的时机
+&emsp;对于读操作，当缓冲区由不可读变为可读时，即缓冲区由空变为不空时；当新数据到达，即缓冲区中的待读数据变多的时候；当缓冲区有数据可读，且应用进程对相应的描述符进行EPOLL_CTL_MOD修改EPOLLIN事件时候触发。<br>
+&emsp;对于写操作，当缓冲区由不可写变为可写时。当有旧数据被发送走，即缓冲区中的内容变少的时候。当缓冲区有空间可写，且应用进程对相应的描述符进行EPOLL_CTL_MOD 修改EPOLLOUT事件时触发。<br>
