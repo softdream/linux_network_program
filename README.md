@@ -34,10 +34,10 @@ typedef union epoll_data
   uint32_t u32;
   uint64_t u64;
 }epoll_data_t;
-```<br>
+```
 ```
 struct epoll_event{
   uint32_t events;
   epoll_data_t data;
 };
-```<br>
+```
