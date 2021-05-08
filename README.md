@@ -17,16 +17,16 @@ IO多路复用是指，在一个操作里同时监听多个输入输出源，在
 &emsp;&emsp;返回值是epoll的文件描述符。
 ### 3.2 ```int epoll_ctl( int epfd, int opt, int fd, struct epoll_event *event )```
 &emsp;3.2.1功能：
-&emsp;&emsp;将被监听的描述符添加到红黑树或者从红黑树中删除或者对监听的事件进行修改。
-&emsp;3.2.2参数：
-&emsp;&emsp;epfd是指epoll的文件描述符，即```int epoll_create( int size )```的返回值。
-&emsp;&emsp;opt参数的操作类型有：
-&emsp;&emsp;&emsp;```EPOLL_CTL_ADD```，向interest list中添加一个需要监视的描述符；
-&emsp;&emsp;&emsp;```EPOLL_CTL_DEL```, 向interest list中删除一个描述符；
-&emsp;&emsp;&emsp;```EPOLL_CTL_MOD```, 修改interest list中的一个描述符。
-&emsp;&emsp;fd是要对其进行操作的事件的文件描述符。
-&emsp;&emsp;event是一个事件的结构体。其中：
-&emsp;&emsp;```struct epoll_event```的结构如下：
+&emsp;&emsp;将被监听的描述符添加到红黑树或者从红黑树中删除或者对监听的事件进行修改。<br>
+&emsp;3.2.2参数：<br>
+&emsp;&emsp;epfd是指epoll的文件描述符，即```int epoll_create( int size )```的返回值。<br>
+&emsp;&emsp;opt参数的操作类型有：<br>
+&emsp;&emsp;&emsp;```EPOLL_CTL_ADD```，向interest list中添加一个需要监视的描述符；<br>
+&emsp;&emsp;&emsp;```EPOLL_CTL_DEL```, 向interest list中删除一个描述符；<br>
+&emsp;&emsp;&emsp;```EPOLL_CTL_MOD```, 修改interest list中的一个描述符。<br>
+&emsp;&emsp;fd是要对其进行操作的事件的文件描述符。<br>
+&emsp;&emsp;event是一个事件的结构体。其中：<br>
+&emsp;&emsp;```struct epoll_event```的结构如下：<br>
 &emsp;&emsp;```typedef union epoll_data```<br>
 &emsp;&emsp;&emsp;```void *ptr;```<br>
 &emsp;&emsp;&emsp;```int fd;```<br>
