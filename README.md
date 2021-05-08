@@ -60,5 +60,7 @@ EPOLLERR：描述符产生错误时触发，默认检测事件
 &emsp;&emsp;events是用来记录触发事件的集合；<br>
 &emsp;&emsp;maxevents是返回events的最大个数；<br>
 &emsp;&emsp;timeout描述函数调用过程中阻塞的时间上限。timeout=-1表示调用将一直阻塞，直到文件描述符进入ready状态或者捕获到信号才返回。
-timeout==0用于非阻塞检测是否有描述符处于ready状态，不管结果怎么样，调用都立即返回。
-timeout>0表示调用将最多持续timeout时间，如果期间有检测对象变成ready或者捕获到信号则返回，否则直到超时。<br>
+&emsp;timeout==0用于非阻塞检测是否有描述符处于ready状态，不管结果怎么样，调用都立即返回。
+&emsp;timeout>0表示调用将最多持续timeout时间，如果期间有检测对象变成ready或者捕获到信号则返回，否则直到超时。<br>
+&emsp;3.3.3 参数解释：<br>
+&emsp;&emsp;处于ready状态的那些文件描述符会被复制进ready list中，epoll_wait用于向用户进程返回ready list。events和maxevents两个参数&emsp;描述一个由用户分配的struct epoll event数组，调用返回时，内核将ready list复制到这个数组中，并将实际复制个数作为返回值，注意，如&emsp;果ready list比maxevents大，则只能复制前maxevents个成员。<br>
