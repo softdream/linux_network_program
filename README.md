@@ -27,12 +27,12 @@ IO多路复用是指，在一个操作里同时监听多个输入输出源，在
 &emsp;&emsp;fd是要对其进行操作的事件的文件描述符。<br>
 &emsp;&emsp;event是一个事件的结构体。其中：<br>
 &emsp;&emsp;```struct epoll_event```的结构如下：<br>
-&emsp;&emsp;```typedef union epoll_data```<br>
-&emsp;&emsp;&emsp;```void *ptr;```<br>
-&emsp;&emsp;&emsp;```int fd;```<br>
-&emsp;&emsp;&emsp;```uint32_t u32;```<br>
-&emsp;&emsp;&emsp;```uint64_t u64;```<br>
-&emsp;&emsp;```}epoll_data_t;```<br>
+```typedef union epoll_data
+void *ptr;
+int fd;
+uint32_t u32;
+uint64_t u64;
+}epoll_data_t;```<br>
 &emsp;&emsp;```struct epoll_event{```<br>
 &emsp;&emsp;&emsp;```uint32_t events;```<br>
 &emsp;&emsp;&emsp;```epoll_data_t data;```<br>
